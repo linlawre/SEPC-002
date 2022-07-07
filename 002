@@ -1,0 +1,662 @@
+1.
+Use StringBuilder for concatenation 
+
+2.
+The Array class is the base class for all the arrays in C#.
+
+3.
+Array.Sort(intArray);
+
+4.
+a.Length
+
+5.
+Yes, you can
+
+6.
+System.Array.CopyTo() performs deep copy of the array whereas  System.Array.Clone() performs shallow copy of the array.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1.
+
+using System;
+ 
+public class Test
+{
+    public static void Main(string[] args)
+    {
+     
+        int[] a = new int [10] {1,2,3,4,5,6,7,8,9,10};
+        int temp = a.Length;
+        int [] b = new int [temp];
+ 
+ 
+        for (int i = 0; i < 10; i++)
+        {
+            b[i] = a[i];
+        }
+ 
+        foreach(var i in b)
+            Console.Write(i + " ");
+        Console.WriteLine();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2.
+
+using System;
+using System.Collections;
+public class Test
+{
+    public static void Main(string[] args)
+    {
+ 
+        ArrayList myAL = new ArrayList();
+ 
+        while(true) {
+ 
+            Console.WriteLine("Enter command (+ item, - item, or -- to clear)):");
+           
+            string x = Console.ReadLine();
+ 
+            Console.WriteLine("To do list:");
+ 
+            if (x[0] == '-' && x[1] == '-'){
+                myAL = new ArrayList();
+            }
+            else if (x[0] == '-'){
+                x = x.Replace("-", "");
+                x = x.Replace(" ", "");
+ 
+                myAL.RemoveAt(myAL.IndexOf(x));
+            }
+            else if (x[0] == '+'){
+                x = x.Replace("+", "");
+                x = x.Replace(" ", "");
+                myAL.Add(x);
+            }
+            else{
+                continue;
+            }
+ 
+            foreach (var item in myAL)
+            {
+                Console.WriteLine(item);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3.
+using System;
+using System.Collections;
+public class Test
+{
+    public static void Main(string[] args)
+    {
+        Console.Write("Enter start:  ");
+        int start = int.Parse(Console.ReadLine());
+   
+        Console.Write("Enter start:  ");
+        int end = int.Parse(Console.ReadLine());
+     
+        Console.WriteLine("All Prime num: ");
+        ArrayList myAL = FindPrimesInRange(start, end);
+ 
+        foreach(var i in myAL)
+            Console.WriteLine(i);
+       
+    }
+ 
+    public static ArrayList FindPrimesInRange(int startNum, int endNum) {
+        ArrayList myAL = new ArrayList();
+ 
+        for (int i = startNum; i <= endNum; i++) {
+            if(check(i)){
+                myAL.Add(i);
+            }
+        }
+ 
+        return myAL;
+    }
+ 
+    public static Boolean check(int num) {
+ 
+        if (num == 1)
+            return false;
+ 
+        for (int i = 2; i < num; i++) {
+            if (num % i == 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4.
+using System;
+using System.Collections;
+public class Test
+{
+    public static void Main(string[] args)
+    {
+        ArrayList arr = new ArrayList();
+        ArrayList a = new ArrayList();
+        Console.Write("Enter array: ");
+        string phrase = Console.ReadLine();
+        a.AddRange(phrase.Split(" "));
+        Console.Write("Enter rot: ");
+        int rot = int.Parse(Console.ReadLine());
+ 
+        Console.WriteLine("-------------------------------");
+ 
+        ArrayList final = new ArrayList();
+ 
+        for (int i = 0; i < a.Count; i++)
+            final.Add(0);
+ 
+        for(int i = 0; i < rot; i++)
+        {
+            ArrayList temp = new ArrayList();
+ 
+            temp.Add(a[a.Count - 1]);
+ 
+            for (int k = 0; k < a.Count - 1; k++) {
+                temp.Add(a[k]);
+            }
+ 
+            arr.Add(temp);
+ 
+            a = temp.Clone() as ArrayList;
+        }
+ 
+        for(int i = 0; i < arr.Count; i++)
+        {
+            ArrayList temp = arr[i] as ArrayList;
+ 
+            for (int j = 0; j < temp.Count; j++){
+                final[j] = int.Parse(final[j].ToString()) + int.Parse(temp[j].ToString());
+            }
+        }
+ 
+        for(int i = 0; i < arr.Count; i++)
+        {
+            ArrayList temp = arr[i] as ArrayList;
+ 
+            for (int j = 0; j < temp.Count; j++){
+               
+                Console.Write(temp[j]);
+            }
+ 
+            Console.WriteLine();
+        }
+ 
+        Console.WriteLine("-------------------------------");
+ 
+        for(int i = 0; i < final.Count; i++) {
+            Console.Write(final[i] + " ");
+        }
+        Console.WriteLine();
+ 
+    }
+}
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+5.
+using System;
+using System.Collections;
+using System.Collections.Generic;
+public class Test
+{
+    public static void Main(string[] args)
+    {
+        int [] a = {2,1,1,2,3,3,2,2,2,1};
+       
+        int max_v = a[0];
+        int max_c = 1;
+ 
+        int temp_v = a[0];
+        int temp_c = 1;
+       
+        for(int i = 1; i < a.Length; i++)
+        {
+            if (a[i] == temp_v){
+                temp_c = temp_c + 1;
+ 
+                if (temp_c > max_c){
+                    max_v = a[i];
+                    max_c = temp_c;
+                }
+            }
+            else{
+                temp_v = a[i];
+                temp_c = 1;
+            }
+        }
+ 
+        for (int i = 0; i < max_c; i++){
+            Console.Write(max_v + " ");
+        }
+        Console.WriteLine();
+    }
+}
+
+
+6.
+using System;
+using System.Collections;
+using System.Collections.Generic;
+public class Test
+{
+    public static void Main(string[] args)
+    {
+        Dictionary<int, int> My_dict1 =  new Dictionary<int, int>();
+        ArrayList v = new ArrayList();
+ 
+        int [] a = {7,7,7,0,2,2,2,0,10,10,10};
+ 
+        for(int i = 0; i < a.Length; i++)
+        {
+            Console.WriteLine("in");
+            if (My_dict1.ContainsKey(a[i])){
+                My_dict1[a[i]] = My_dict1[a[i]] + 1;
+            }
+            else{
+                My_dict1.Add(a[i], 1);
+            }
+        }
+ 
+ 
+        int m_k = 0;
+        int m_v = 0;
+ 
+        foreach(var i in My_dict1){
+            if(i.Value > m_v)
+            {
+                m_v = i.Value;
+            }
+        }
+ 
+        foreach(var i in My_dict1){
+            if(i.Value == m_v)
+            {
+                v.Add(i.Key);
+            }
+        }
+ 
+        foreach(var i in v){
+            Console.Write(i + " ");
+        }
+        Console.WriteLine();
+    }
+}
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1.
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+public class Test
+{
+    public static void Main(string[] args)
+    {
+        string a = "abcde";
+        StringBuilder b = new StringBuilder();
+ 
+        for(int i = a.Length - 1; i >= 0; i--)
+        {
+            b.Append(a[i]);
+        }
+ 
+        Console.WriteLine(b);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3.
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
+public class Test
+{
+    public static void Main(string[] args)
+    {
+        string a = "Hi,exe? ABBA! Hog fully a string: ExE. Bob";
+        a = a.Replace("?", "");
+        a = a.Replace("!", "");
+        a = a.Replace(".", "");
+        a = a.Replace(",", "");
+ 
+        ArrayList b = new ArrayList(a.Split(" "));
+        ArrayList final = new ArrayList();
+ 
+        foreach(var i in b){
+           
+            if (checkc(i.ToString())) {
+                final.Add(i);
+            }
+ 
+        }
+ 
+        foreach(var i in final){
+       
+            Console.Write(i + " ");
+ 
+        }
+        Console.WriteLine();
+ 
+    }
+ 
+ 
+    public static Boolean checkc(string a) {
+        StringBuilder temp = new StringBuilder();
+       
+ 
+        for (int i = a.Length - 1; i >= 0; i--){
+            temp.Append(a[i]);
+        }
+ 
+        if (temp.ToString() == a)
+            return true;
+        else
+            return false;
+    }
+ 
+ 
+}
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4.
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
+public class Test
+{
+    public static void Main(string[] args)
+    {
+        string a = "https://www.apple.com/iphone";
+ 
+        StringBuilder protocol = new StringBuilder();
+        StringBuilder server = new StringBuilder();
+        StringBuilder resource = new StringBuilder();
+        int index = 0;
+        for(int i = 0; i < a.Length; i++) {
+            if (a[i] == ':') {
+                i = i + 2;
+                index++;
+            }
+            else if (a[i] == '/')
+                index++;
+            else if (index == 0){
+                protocol.Append(a[i]);
+            }
+            else if (index == 1){
+                server.Append(a[i]);
+            }
+            else if (index == 2){
+                resource.Append(a[i]);
+            }
+        }
+ 
+ 
+        Console.WriteLine(protocol);
+        Console.WriteLine(server);
+        Console.WriteLine(resource);
+    }
+}
