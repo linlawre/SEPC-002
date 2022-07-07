@@ -496,6 +496,39 @@ public class Test
 
 2.
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
+public class Test
+{
+    public static void Main(string[] args)
+    {
+        string init = "C# is not C++, and PHP is not Delphi!";
+        string pattern = @"([a-zA-Z#+$]+)";
+
+        ArrayList temp = new ArrayList(init.Split(" "));
+
+        int start = 0;
+        int end = temp.Count - 1;
+
+        while(end > start) {
+            Match s_r = Regex.Match(temp[start].ToString(), pattern);
+            Match e_r = Regex.Match(temp[end].ToString(), pattern);
+            temp[start] = temp[start].ToString().Replace(s_r.Value, e_r.Value);
+            temp[end] = temp[end].ToString().Replace(e_r.Value, s_r.Value);
+            end--;
+            start++;
+        }
+
+        Console.WriteLine(init);
+        foreach(var i in temp)
+            Console.Write(i + " ");
+        Console.WriteLine();
+    }
+}
+
 
 
 
